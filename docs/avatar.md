@@ -50,12 +50,3 @@ import { Avatar } from "@/components/ui/avatar"
 // Image avatar with offline status
 <Avatar type="image" state="offline" size="sm" />
 ```
-
-## Size Specifications
-
-| Size | Diameter | Status Dot Size |
-|------|----------|----------------|
-| lg | 56px | 18px |
-| md | 48px | 16px |
-| sm | 40px | 14px |
-| xs | 32px | 12px |
