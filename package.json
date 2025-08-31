@@ -1,0 +1,12 @@
+{
+  "name": "dynamiclayer",
+  "version": "1.0.0",
+  "description": "Reusable React Native components and CLI to copy them",
+  "bin": {
+    "dynamiclayer": "./cli.js"
+  },
+  "files": ["cli.js","components/","styles/"],
+  "keywords": ["react-native","components","cli"],
+  "author": "Ferdinand Fichtl",
+  "license": "MIT"
+}
