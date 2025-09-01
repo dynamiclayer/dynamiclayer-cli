@@ -5,9 +5,14 @@ const path = require('path');
 
 // Mapping, welche Dateien bei welchem Befehl kopiert werden
 const filesMap = {
-  badge: [
-    { src: 'components/ui/Badge.js', dest: 'components/ui/Badge.js' },
-    { src: 'styles/style.js', dest: 'styles/style.js' }
+  alert: [
+    { src: 'components/ui/Alert.js', dest: 'components/ui/Alert.js' },
+    { src: 'styles/style.js', dest: 'styles/style.js' },
+    { src: 'assets/icons/successIcon.js', dest: 'assets/icons/successIcon.js' },
+    { src: 'assets/icons/informationIcon.js', dest: 'assets/icons/informationIcon.js' },
+    { src: 'assets/icons/errorIcon.js', dest: 'assets/icons/errorIcon.js' },
+    { src: 'assets/icons/disabledIcon.js', dest: 'assets/icons/disabledIcon.js' },
+    { src: 'assets/icons/closeIcon.js', dest: 'assets/icons/closeIcon.js' }
   ],
   avatar: [
     { src: 'components/ui/Avatar.js', dest: 'components/ui/Avatar.js' },
@@ -23,6 +28,10 @@ const filesMap = {
     { src: 'assets/icons/avatarIcon.js', dest: 'assets/icons/avatarIcon.js' },
     { src: 'assets/icons/onlineIcon.js', dest: 'assets/icons/onlineIcon.js' },
     { src: 'assets/icons/offlineIcon.js', dest: 'assets/icons/offlineIcon.js' }
+  ],
+  badge: [
+    { src: 'components/ui/Badge.js', dest: 'components/ui/Badge.js' },
+    { src: 'styles/style.js', dest: 'styles/style.js' }
   ],
   theme: [
     { src: 'styles/style.js', dest: 'styles/style.js' }
@@ -40,7 +49,7 @@ function copyFiles(fileList) {
 
     const src = path.join(__dirname, file.src);
     const dest = path.join(process.cwd(), file.dest);
-    
+
     try {
       fs.mkdirSync(path.dirname(dest), { recursive: true });
       fs.copyFileSync(src, dest);
