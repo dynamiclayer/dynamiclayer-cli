@@ -6,21 +6,17 @@ import Avatar from "./Avatar";
 
 const SIZE_MAP = {
   lg: 56,
-  md: 48,
-  sm: 40,
   xs: 32,
 };
 
 const COUNT_TEXT_STYLE_MAP = {
   lg: { ...textStyles.text_xl_semibold },
-  md: { ...textStyles.text_lg_semibold },
-  sm: { ...textStyles.text_sm_semibold },
   xs: { ...textStyles.text_xs_semibold },
 };
 
 const OFFSET = 16;
 
-const AvatarGroup = ({ avatars = [], size = "sm", max = 2, style }) => {
+const AvatarGroup = ({ avatars = [], size = "lg", max = 2, style }) => {
   const diameter = SIZE_MAP[size];
   const countTextStyle = COUNT_TEXT_STYLE_MAP[size];
 
@@ -28,9 +24,9 @@ const AvatarGroup = ({ avatars = [], size = "sm", max = 2, style }) => {
   const first = avatars[0];
   const second = avatars[1]; // nur genutzt, wenn total === 2
   const remainingCount = Math.max(0, total - 1); // für Kreis-Zahl bei total >= 3
-
-  const showSecondAsNumber = total >= 3;
-  const showSecondAsAvatar = total === 2;
+  
+  const showSecondAsNumber = total >= max + 1;
+  const showSecondAsAvatar = total === max;
 
   const containerSize =
     total >= 2 ? diameter + OFFSET : diameter;

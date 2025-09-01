@@ -8,30 +8,24 @@ import OfflineIcon from '../../assets/icons/offlineIcon';
 
 const SIZE_MAP = {
   lg: 56,
-  md: 48,
-  sm: 40,
   xs: 32,
 };
 
 const STATUS_MAP = {
   lg: { dotSize: 18, offsetLeft: 40, offsetTop: 40 },
-  md: { dotSize: 16, offsetLeft: 34, offsetTop: 34 },
-  sm: { dotSize: 14, offsetLeft: 28, offsetTop: 32 },
   xs: { dotSize: 12, offsetLeft: 22, offsetTop: 30 },
 };
 
 // Typography per size
 const TEXT_STYLE_MAP = {
   lg: { ...textStyles.text_xl_semibold },
-  md: { ...textStyles.text_lg_semibold  },
-  sm: { ...textStyles.text_sm_semibold },
   xs: { ...textStyles.text_xs_semibold },
 };
 
 const DEFAULT_IMAGE = require("../assets/ProfilePictures.png");
 const DEFAULT_INITIALS = "Aa";
 
-const Avatar = ({ type = "icon", state = "default", size = "md", image = null }) => {
+const Avatar = ({ type = "icon", state = "default", size = "lg", image = null }) => {
   const diameter = SIZE_MAP[size];
   const { dotSize, offsetLeft, offsetTop } = STATUS_MAP[size];
   const textStyleForSize = TEXT_STYLE_MAP[size];
