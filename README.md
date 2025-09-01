@@ -45,7 +45,7 @@ import { Badge } from "@/components/ui/badge"
 ```jsx
 import { Avatar } from "@/components/ui/avatar"
 
-<Avatar type="icon" state="online" size="md" />
+<Avatar type="icon" state="online" size="lg" />
 ```
 
 [View Avatar Documentation](./docs/avatar.md)
