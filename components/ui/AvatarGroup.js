@@ -22,8 +22,8 @@ const AvatarGroup = ({ avatars = [], size = "lg", max = 2, style }) => {
 
   const total = avatars.length;
   const first = avatars[0];
-  const second = avatars[1]; // nur genutzt, wenn total === 2
-  const remainingCount = Math.max(0, total - 1); // für Kreis-Zahl bei total >= 3
+  const second = avatars[1];
+  const remainingCount = Math.max(0, total - 1);
   
   const showSecondAsNumber = total >= max + 1;
   const showSecondAsAvatar = total === max;
@@ -40,7 +40,7 @@ const AvatarGroup = ({ avatars = [], size = "lg", max = 2, style }) => {
       ]}
       accessibilityRole="group"
     >
-      {/* Slot 1: erster Avatar (falls vorhanden) */}
+
       {first && (
         <View
           style={[
@@ -58,7 +58,6 @@ const AvatarGroup = ({ avatars = [], size = "lg", max = 2, style }) => {
         </View>
       )}
 
-      {/* Slot 2: zweiter Avatar (wenn genau 2) ODER Zahl im Kreis (wenn >=3) */}
       {(showSecondAsAvatar || showSecondAsNumber) && (
         <View
           style={[

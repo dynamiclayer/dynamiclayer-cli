@@ -16,7 +16,7 @@ const STATUS_MAP = {
   xs: { dotSize: 12, offsetLeft: 22, offsetTop: 30 },
 };
 
-// Typography per size
+
 const TEXT_STYLE_MAP = {
   lg: { ...textStyles.text_xl_semibold },
   xs: { ...textStyles.text_xs_semibold },
@@ -78,7 +78,6 @@ const Avatar = ({ type = "icon", state = "default", size = "lg", image = null })
         )}
       </View>
 
-      {/* State dot (none for 'default') */}
       {state !== "default" && (
         <View
           style={[

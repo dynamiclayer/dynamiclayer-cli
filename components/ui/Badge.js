@@ -60,7 +60,7 @@ const Badge = ({
   const typeConfig = BADGE_CONFIGS.types[type] || BADGE_CONFIGS.types.default;
   const sizeConfig = BADGE_CONFIGS.sizes[size] || BADGE_CONFIGS.sizes.md;
 
-  const content = children ?? text ?? 'Badge'; // fallback priority
+  const content = children ?? text ?? 'Badge';
 
   return (
     <View
