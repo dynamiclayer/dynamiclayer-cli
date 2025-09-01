@@ -28,13 +28,11 @@ import { AvatarGroup } from "@/components/ui/avatar-group"
     { type: "icon" }
   ]}
   max={2}
-  size="md"
+  size="lg"
 />
 
 // Different sizes
 <AvatarGroup avatars={[...]} size="xs" />
-<AvatarGroup avatars={[...]} size="sm" />
-<AvatarGroup avatars={[...]} size="md" />
 <AvatarGroup avatars={[...]} size="lg" />
 ```
 
@@ -43,7 +41,7 @@ import { AvatarGroup } from "@/components/ui/avatar-group"
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | avatars | Array<AvatarProps> | [] | Array of avatar configurations |
-| size | 'xs' \| 'sm' \| 'md' \| 'lg' | 'sm' | Controls the size of all avatars |
+| size | 'xs' \| 'lg' | Controls the size of all avatars |
 | max | number | 2 | Maximum number of avatars to display before showing count |
 | style | ViewStyle | - | Additional styles for the container |
 
@@ -76,7 +74,7 @@ type AvatarProps = {
 // Custom styling
 <AvatarGroup 
   avatars={[...]}
-  size="md"
+  size="lg"
   style={{ marginBottom: 16 }}
 />
 
@@ -87,7 +85,7 @@ type AvatarProps = {
     { type: "icon" }
   ]}
   max={999}
-  size="sm"
+  size="lg"
 />
 ```
 

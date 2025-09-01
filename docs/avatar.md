@@ -25,8 +25,6 @@ import { Avatar } from "@/components/ui/avatar"
 
 // Different sizes
 <Avatar size="xs" />
-<Avatar size="sm" />
-<Avatar size="md" />
 <Avatar size="lg" />
 ```
 
@@ -36,7 +34,7 @@ import { Avatar } from "@/components/ui/avatar"
 |------|------|---------|-------------|
 | type | 'icon' \| 'initials' \| 'image' | 'icon' | Sets the avatar display type |
 | state | 'default' \| 'online' \| 'offline' | 'default' | Controls the status indicator |
-| size | 'xs' \| 'sm' \| 'md' \| 'lg' | 'md' | Controls the size of the avatar |
+| size | 'xs' | 'lg' | Controls the size of the avatar |
 | image | ImageSourcePropType | null | The image source when type="image" |
 
 ## Size Dimensions
@@ -44,8 +42,6 @@ import { Avatar } from "@/components/ui/avatar"
 | Size | Dimensions | Status Dot |
 |------|------------|------------|
 | xs | 32px | 12px |
-| sm | 40px | 14px |
-| md | 48px | 16px |
 | lg | 56px | 18px |
 
 ## Examples
@@ -61,7 +57,7 @@ import { Avatar } from "@/components/ui/avatar"
 // Initials avatar with custom initials
 <Avatar 
   type="initials" 
-  size="md"
+  size="lg"
   initials="JD"  // Default: "Aa"
 />
 
