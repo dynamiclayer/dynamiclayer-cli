@@ -1,12 +1,10 @@
 // Avatar.tsx
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-import { colors, textStyles } from "../../style";
-import AvatarIcon from "../assets/icons/avatarIcon"
-import OnlineIcon from "../assets/icons/onlineIcon";
-import OfflineIcon from "../assets/icons/offlineIcon";
-
-
+import { colors, textStyles } from "../../styles/style";
+import AvatarIcon from "../../assets/icons/avatarIcon";
+import OnlineIcon from '../../assets/icons/onlineIcon';
+import OfflineIcon from '../../assets/icons/offlineIcon';
 
 const SIZE_MAP = {
   lg: 56,
@@ -30,10 +28,10 @@ const TEXT_STYLE_MAP = {
   xs: { ...textStyles.text_xs_semibold },
 };
 
-const DEFAULT_IMAGE = require("../../../assets/ProfilePictures.png");
+const DEFAULT_IMAGE = require("../assets/ProfilePictures.png");
 const DEFAULT_INITIALS = "Aa";
 
-const Avatar = ({ type = "icon", state = "default", size = "md" }) => {
+const Avatar = ({ type = "icon", state = "default", size = "md", image = null }) => {
   const diameter = SIZE_MAP[size];
   const { dotSize, offsetLeft, offsetTop } = STATUS_MAP[size];
   const textStyleForSize = TEXT_STYLE_MAP[size];
@@ -63,7 +61,7 @@ const Avatar = ({ type = "icon", state = "default", size = "md" }) => {
             <Text
               style={[
                 styles.initials,
-                {
+                { 
                   fontSize: textStyleForSize.fontSize,
                   lineHeight: textStyleForSize.lineHeight,
                   ...(textStyleForSize.letterSpacing !== undefined
@@ -79,7 +77,7 @@ const Avatar = ({ type = "icon", state = "default", size = "md" }) => {
 
         {type === "image" && (
           <Image
-            source={DEFAULT_IMAGE}
+            source={image || DEFAULT_IMAGE}
             resizeMode="cover"
             style={styles.imageFill}
           />

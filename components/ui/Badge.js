@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { colors, paddings, textStyles, rounded } from '../styles/style';
+import { colors, paddings, textStyles, rounded } from '../../styles/style';
 
 const BADGE_CONFIGS = {
   types: {

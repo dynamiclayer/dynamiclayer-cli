@@ -27,7 +27,6 @@ dynamiclayer add <component-name>
 Available components:
 - `badge` - A versatile badge component
 - `avatar` - A flexible avatar component
-- `theme` - Core styling utilities
 
 ## Components
 

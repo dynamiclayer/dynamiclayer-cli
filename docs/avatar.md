@@ -16,7 +16,7 @@ import { Avatar } from "@/components/ui/avatar"
 // Different types
 <Avatar type="icon" />
 <Avatar type="initials" />
-<Avatar type="image" />
+<Avatar type="image" source={require('./profile.png')} />
 
 // Different states
 <Avatar state="default" />
@@ -37,16 +37,46 @@ import { Avatar } from "@/components/ui/avatar"
 | type | 'icon' \| 'initials' \| 'image' | 'icon' | Sets the avatar display type |
 | state | 'default' \| 'online' \| 'offline' | 'default' | Controls the status indicator |
 | size | 'xs' \| 'sm' \| 'md' \| 'lg' | 'md' | Controls the size of the avatar |
+| image | ImageSourcePropType | null | The image source when type="image" |
+
+## Size Dimensions
+
+| Size | Dimensions | Status Dot |
+|------|------------|------------|
+| xs | 32px | 12px |
+| sm | 40px | 14px |
+| md | 48px | 16px |
+| lg | 56px | 18px |
 
 ## Examples
 
 ```jsx
 // Icon avatar with online status
-<Avatar type="icon" state="online" size="lg" />
+<Avatar 
+  type="icon" 
+  state="online" 
+  size="lg" 
+/>
 
-// Initials avatar
-<Avatar type="initials" size="md" />
+// Initials avatar with custom initials
+<Avatar 
+  type="initials" 
+  size="md"
+  initials="JD"  // Default: "Aa"
+/>
 
-// Image avatar with offline status
-<Avatar type="image" state="offline" size="sm" />
+// Image avatar with offline status and custom image
+<Avatar 
+  type="image" 
+  state="offline" 
+  size="sm"
+  image={require('./profile.png')}
+/>
+
+// Default avatar with no status
+<Avatar /> // Renders a medium icon avatar
 ```
+
+## Related Components
+
+- [Avatar Group](./avatar-group.md) - Display multiple avatars in a stack
