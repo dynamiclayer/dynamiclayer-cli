@@ -1,5 +1,5 @@
 {
-  "name": "dynamiclayer",
+  "name": "@dynamiclayer/cli",
   "version": "1.0.0",
   "description": "Reusable React Native components and CLI to copy them",
   "bin": {
@@ -8,5 +8,12 @@
   "files": ["cli.js","components/","styles/"],
   "keywords": ["react-native","components","cli"],
   "author": "Ferdinand Fichtl",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dynamiclayer/dynamiclayer-cli.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
