@@ -33,6 +33,10 @@ const filesMap = {
     { src: 'components/ui/Badge.js', dest: 'components/ui/Badge.js' },
     { src: 'styles/style.js', dest: 'styles/style.js' }
   ],
+  tag: [
+    { src: 'components/ui/Tag.js', dest: 'components/ui/Tag.js' },
+    { src: 'styles/style.js', dest: 'styles/style.js' }
+  ],
   theme: [
     { src: 'styles/style.js', dest: 'styles/style.js' }
   ]

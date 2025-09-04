@@ -1,98 +1,46 @@
-# Badge Component
+# Badge
 
-Use this command to install the component in your project:
+Die `Badge`-Komponente wird verwendet, um Benachrichtigungen oder Zählungen anzuzeigen, die mit einem Element verknüpft sind. Sie kann als Punkt oder als Pille mit Text angezeigt werden.
 
-```bash
-dynamiclayer add badge
-```
-
-## Usage
-
-Add this code example to your project to see how the component works:
+## Verwendung
 
 ```jsx
-import { Badge } from "@/components/ui/Badge"
+import React from 'react';
+import { View } from 'react-native';
+import Badge from '@/components/ui/Badge';
 
-// Different types
-<Badge>Default</Badge>
-<Badge type="warning">Warning</Badge>
-<Badge type="success">Success</Badge>
-<Badge type="error">Error</Badge>
+const MyComponent = () => (
+  <View>
+    {/* Einfacher Punkt-Badge */}
+    <Badge size="sm" />
 
-// Different sizes
-<Badge size="sm">Small</Badge>
-<Badge size="md">Medium</Badge>
-<Badge size="lg">Large</Badge>
+    {/* Badge mit Zählung */}
+    <Badge count={5} />
 
-// With custom text
-<Badge text="Custom Text" />
+    {/* Badge mit maximaler Zählung und Offset */}
+    <Badge count={120} maxCount={99} offsetX={-5} offsetY={-5} />
 
-// As a child component
-<Badge>Children Text</Badge>
+    {/* Badge mit Benachrichtigungen und angezeigter Null */}
+    <Badge notifications={0} showZero={true} />
+  </View>
+);
+
+export default MyComponent;
 ```
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| type | 'default' \| 'warning' \| 'success' \| 'error' | 'default' | Sets the badge style variant |
-| size | 'sm' \| 'md' \| 'lg' | 'md' | Controls the size of the badge |
-| text | string | 'Badge' | The text content of the badge |
-| style | ViewStyle | - | Additional styles for the badge container |
-| textStyle | TextStyle | - | Additional styles for the badge text |
-| children | ReactNode | - | Alternative to text prop |
-
-## Size Dimensions
-
-| Size | Height | Horizontal Padding | Text Size |
-|------|--------|-------------------|-----------|
-| sm | 20px | 4px | xs |
-| md | 24px | 8px | sm |
-| lg | 28px | 8px | base |
-
-## Color Variants
-
-| Type | Background | Text Color |
-|------|------------|------------|
-| default | grey100 | grey600 |
-| warning | yellow300 | yellow700 |
-| success | green100 | green700 |
-| error | red100 | red600 |
-
-## Examples
-
-```jsx
-// Success badge with custom text
-<Badge 
-  type="success" 
-  text="Completed" 
-/>
-
-// Large warning badge
-<Badge 
-  type="warning" 
-  size="lg" 
-  text="Pending" 
-/>
-
-// Small error badge with custom styles
-<Badge 
-  type="error" 
-  size="sm" 
-  text="Failed"
-  style={{ marginLeft: 8 }}
-  textStyle={{ fontWeight: 'bold' }}
-/>
-
-// Using children prop
-<Badge type="success">
-  Task Complete
-</Badge>
-```
-
-## Content Priority
-
-The badge content is determined in the following order:
-1. Children prop (if provided)
-2. Text prop (if provided)
-3. Default text "Badge"
+| Prop          | Typ       | Standardwert | Beschreibung                                                              |
+| :------------ | :-------- | :----------- | :------------------------------------------------------------------------ |
+| `size`        | `string`  | `'md'`       | Die Größe des Badges. `'sm'` für einen Punkt, `'md'` für eine Pille.    |
+| `count`       | `number`  | `undefined`  | Die anzuzeigende Zählung.                                                 |
+| `notifications` | `number`  | `undefined`  | Alternative zur `count`-Prop für Benachrichtigungen.                    |
+| `showZero`    | `boolean` | `false`      | Wenn `true`, wird der Badge auch bei einem Wert von 0 angezeigt.         |
+| `maxCount`    | `number`  | `99`         | Der maximale Wert, der angezeigt wird, bevor `maxCount+` angezeigt wird. |
+| `absolute`    | `boolean` | `true`       | Wenn `true`, wird der Badge absolut positioniert.                        |
+| `offsetX`     | `number`  | `0`          | Horizontaler Offset, wenn `absolute` auf `true` gesetzt ist.            |
+| `offsetY`     | `number`  | `0`          | Vertikaler Offset, wenn `absolute` auf `true` gesetzt ist.              |
+| `style`       | `StyleProp` | `undefined`  | Stil für den Container des Badges.                                        |
+| `badgeStyle`  | `StyleProp` | `undefined`  | Stil für den Badge selbst (Punkt oder Pille).                             |
+| `textStyle`   | `StyleProp` | `undefined`  | Stil für den Text innerhalb des Badges.                                   |
+| `...rest`     | `any`     | `undefined`  | Alle anderen Props, die an die `View`-Komponente übergeben werden.      |

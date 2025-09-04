@@ -1,105 +1,89 @@
-import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
-import { colors, paddings, textStyles, rounded } from '../../styles/style';
+// Badge.js
+import React, { memo, useMemo } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { colors, paddings, rounded, textStyles } from '../../styles/style';
 
-const BADGE_CONFIGS = {
-  types: {
-    default: {
-      background: colors.grey100,
-      text: colors.grey600,
-    },
-    warning: {
-      background: colors.yellow300,
-      text: colors.yellow700,
-    },
-    success: {
-      background: colors.green100,
-      text: colors.green700,
-    },
-    error: {
-      background: colors.red100,
-      text: colors.red600,
-    },
-  },
-  sizes: {
-    lg: {
-      height: 28,
-      text: textStyles.text_base_semibold,
-      padding: {
-        horizontal: paddings.p_8,
-        vertical: paddings.p_2,
-      },
-    },
-    md: {
-      height: 24,
-      text: textStyles.text_sm_semibold,
-      padding: {
-        horizontal: paddings.p_8,
-        vertical: paddings.p_2,
-      },
-    },
-    sm: {
-      height: 20,
-      text: textStyles.text_xs_semibold,
-      padding: {
-        horizontal: paddings.p_4,
-        vertical: paddings.p_2,
-      },
-    },
-  },
-};
-
-const Badge = ({
-  type = 'default', // 'default' | 'warning' | 'success' | 'error'
-  size = 'md',      // 'sm' | 'md' | 'lg'
-  text,             // optional
-  style,            // optional
-  textStyle,        // optional
-  children,         // support <Badge>content</Badge>
+const Badge = memo(({
+  size = 'md',
+  count,
+  notifications,
+  showZero = false,
+  maxCount = 99,
+  absolute = true,
+  offsetX = 0,
+  offsetY = 0,
+  style,
+  badgeStyle,
+  textStyle,
+  ...rest
 }) => {
-  const typeConfig = BADGE_CONFIGS.types[type] || BADGE_CONFIGS.types.default;
-  const sizeConfig = BADGE_CONFIGS.sizes[size] || BADGE_CONFIGS.sizes.md;
+  const value = typeof count === 'number' ? count : notifications;
 
-  const content = children ?? text ?? 'Badge';
+  if (!showZero && (!value || value <= 0)) return null;
+
+  const isDot = size === 'sm';
+  const displayText = useMemo(() => {
+    if (isDot) return '';
+    if (typeof value !== 'number') return '';
+    if (value > maxCount) return `${maxCount}+`;
+    return String(value);
+  }, [isDot, value, maxCount]);
+
+  const containerStyle = useMemo(
+    () => [
+      absolute ? styles.absoluteContainer : null,
+      absolute ? { top: offsetY, right: offsetX } : null,
+      style,
+    ],
+    [absolute, offsetX, offsetY, style]
+  );
 
   return (
-    <View
-      style={[
-        styles.badge,
-        {
-          backgroundColor: typeConfig.background,
-          height: sizeConfig.height,
-        },
-        style,
-      ]}
-    >
-      <Text
+    <View pointerEvents="none" style={containerStyle} {...rest}>
+      <View
         style={[
-          styles.badgeText,
-          { color: typeConfig.text },
-          sizeConfig.text,
-          {
-            paddingHorizontal: sizeConfig.padding.horizontal,
-            paddingVertical: sizeConfig.padding.vertical,
-          },
-          textStyle,
+          isDot ? styles.badgeDot : styles.badgePill,
+          badgeStyle,
         ]}
       >
-        {content}
-      </Text>
+        {!isDot && (
+          <Text style={[styles.badgeText, textStyle]} numberOfLines={1}>
+            {displayText}
+          </Text>
+        )}
+      </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
-  badge: {
-    justifyContent: 'center',
+  absoluteContainer: {
+    position: 'absolute',
+  },
+  badgeDot: {
+    height: 8,
+    width: 8,
+    borderRadius: rounded.rounded_full,
+    backgroundColor: colors.red500,
     alignItems: 'center',
-    borderRadius: rounded.rounded,
-    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  badgePill: {
+    minWidth: 16,
+    height: 16,
+    paddingHorizontal: paddings.p_8,
+    paddingVertical: paddings.p_0,
+    borderRadius: rounded.rounded_full,
+    backgroundColor: colors.red500,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
   },
   badgeText: {
+    ...textStyles.text_xs_semibold,
+    color: colors.white,
     textAlign: 'center',
+    includeFontPadding: false,
   },
 });
 
