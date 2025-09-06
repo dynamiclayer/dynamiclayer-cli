@@ -5,7 +5,7 @@ A command-line tool for quickly adding pre-built React Native components to your
 ## Installation
 
 ```bash
-npm install dynamiclayer
+npm install @dynamiclayer/cli
 ```
 
 ## Dependencies
