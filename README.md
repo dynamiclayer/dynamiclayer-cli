@@ -5,7 +5,7 @@ A command-line tool for quickly adding pre-built React Native components to your
 ## Installation
 
 ```bash
-npm install @dynamiclayer/cli
+npm install -g @dynamiclayer/cli
 ```
 
 ## Dependencies
@@ -25,8 +25,12 @@ dynamiclayer add <component-name>
 ```
 
 Available components:
-- `badge` - A versatile badge component
+- `alert` - A versatile alert component
 - `avatar` - A flexible avatar component
+- `avatargroup` - A component for grouping avatars
+- `badge` - A versatile badge component
+- `tag` - A versatile tag component
+- `theme` - Theme related file
 
 ## Components
 
