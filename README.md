@@ -1,6 +1,6 @@
 # DynamicLayer CLI
 
-A command-line tool for quickly adding pre-built React Native components to your project.
+CLI zum schnellen Kopieren vorgefertigter React‑Native‑Komponenten in dein Projekt – inklusive Icons und Styles. Die CLI erkennt automatisch deinen Komponentenordner und passt Importe nach dem Kopieren an.
 
 ## Installation
 
@@ -8,78 +8,74 @@ A command-line tool for quickly adding pre-built React Native components to your
 npm install -g @dynamiclayer/cli
 ```
 
-## Dependencies
+## Peer‑Dependencies (im Zielprojekt installieren)
 
-Make sure to install the required dependencies in your project:
+Die kopierten Komponenten nutzen folgende Pakete. Bitte in deinem Projekt installieren (nicht in der CLI):
 
 ```bash
 npm install react-native-safe-area-context react-native-svg react-native-reanimated
 ```
 
-## Usage
+Hinweis: Diese sind als peerDependencies der CLI deklariert.
 
-Add components to your project using the CLI:
+## Verwendung
 
 ```bash
-dynamiclayer add <component-name>
+dynamiclayer add <komponente>
+
+# Optional mit Zielordnern
+dynamiclayer add <komponente> \
+  --components=src/components \
+  --styles=src/styles \
+  --assets=src/assets
 ```
 
-Available components:
-- `alert` - A versatile alert component
-- `avatar` - A flexible avatar component
-- `avatargroup` - A component for grouping avatars
-- `badge` - A versatile badge component
-- `tag` - A versatile tag component
-- `theme` - Theme related file
+Unterstützte Komponenten:
+- `alert`
+- `avatar`
+- `avatargroup`
+- `badge`
+- `tag`
+- `theme` (kopiert nur `styles/style.js`)
 
-## Components
+## Auto‑Erkennung & Konfiguration
 
-### Badge Component
+- Auto‑Erkennung prüft in deinem Projekt: `src/components` → `src` → `app/components` → Projektroot.
+- Daraus werden Zielpfade für `components/`, `styles/`, `assets/` abgeleitet.
+- Alternative: Lege im Projektroot eine `dynamiclayer.config.json` an:
 
-```jsx
-import { Badge } from "@/components/ui/badge"
-
-<Badge type="success" size="md">Success</Badge>
+```json
+{
+  "componentsDir": "src/components",
+  "stylesDir": "src/styles",
+  "assetsDir": "src/assets"
+}
 ```
 
-[View Badge Documentation](./docs/badge.md)
+## Import‑Rewrites
 
-### Avatar Component
+Nach dem Kopieren korrigiert die CLI Importpfade in den Komponenten automatisch:
+- `../../styles/style` wird relativ zum neuen Speicherort angepasst.
+- `../../assets/...` (z. B. Icons) wird auf den neuen `assets`‑Pfad gemappt.
 
-```jsx
-import { Avatar } from "@/components/ui/avatar"
+## Beispiel‑Struktur
 
-<Avatar type="icon" state="online" size="lg" />
-```
-
-[View Avatar Documentation](./docs/avatar.md)
-
-## Component Organization
-
-Components are installed following a consistent structure:
 ```
 your-project/
-├── assets/
-│   └── icons/
-│       ├── avatarIcon.js
-│       ├── onlineIcon.js
-│       └── offlineIcon.js
-├── components/
-│   └── ui/
-│       ├── Avatar.js
-│       └── Badge.js
-└── styles/
-    └── style.js
+  assets/
+    icons/
+      avatarIcon.js
+      onlineIcon.js
+      offlineIcon.js
+  components/
+    ui/
+      Avatar.js
+      Badge.js
+  styles/
+    style.js
 ```
 
-## Features
+## Lizenz
 
-- 🚀 Quick component installation
-- 📦 Pre-built, customizable components
-- 🎨 Consistent styling system
-- 🔧 Easy to extend and customize
-- 📱 Fully responsive design
+MIT – siehe [LICENSE](LICENSE).
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

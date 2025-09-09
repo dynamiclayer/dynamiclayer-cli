@@ -3,7 +3,103 @@
 const fs = require('fs');
 const path = require('path');
 
-// Mapping, welche Dateien bei welchem Befehl kopiert werden
+function toPosix(p) {
+  return p.split(path.sep).join('/');
+}
+
+function parseFlags(argv) {
+  const flags = {};
+  argv.forEach((arg) => {
+    if (arg.startsWith('--')) {
+      const [k, v] = arg.replace(/^--/, '').split('=');
+      if (k) flags[k] = v ?? true;
+    }
+  });
+  return flags;
+}
+
+function loadConfig(cwd) {
+  const configPath = path.join(cwd, 'dynamiclayer.config.json');
+  if (fs.existsSync(configPath)) {
+    try {
+      const raw = fs.readFileSync(configPath, 'utf8');
+      return JSON.parse(raw);
+    } catch (e) {
+      console.warn('Warnung: Konnte dynamiclayer.config.json nicht lesen:', e.message);
+    }
+  }
+  return {};
+}
+
+function detectDirs(cwd) {
+  const has = (p) => fs.existsSync(path.join(cwd, p));
+  let base = '';
+  if (has('src/components')) base = 'src';
+  else if (has('src')) base = 'src';
+  else if (has('app/components')) base = 'app';
+  const componentsDir = path.join(base, 'components');
+  const stylesDir = path.join(base, 'styles');
+  const assetsDir = path.join(base, 'assets');
+  return { componentsDir, stylesDir, assetsDir };
+}
+
+function resolveTargetDirs(cwd, flags) {
+  const detected = detectDirs(cwd);
+  const config = loadConfig(cwd);
+  const res = {
+    componentsDir: flags.components || config.componentsDir || detected.componentsDir,
+    stylesDir: flags.styles || config.stylesDir || detected.stylesDir,
+    assetsDir: flags.assets || config.assetsDir || detected.assetsDir,
+  };
+  Object.keys(res).forEach((k) => {
+    if (typeof res[k] === 'string') {
+      res[k] = res[k].replace(/^\.\//, '');
+      if (res[k] === '') res[k] = '.';
+    }
+  });
+  return res;
+}
+
+function mapDestPath(relDest, dirs) {
+  if (relDest.startsWith('components/')) return path.join(dirs.componentsDir, relDest.replace(/^components\//, ''));
+  if (relDest.startsWith('styles/')) return path.join(dirs.stylesDir, relDest.replace(/^styles\//, ''));
+  if (relDest.startsWith('assets/')) return path.join(dirs.assetsDir, relDest.replace(/^assets\//, ''));
+  return relDest;
+}
+
+function adjustImportsForFile(absFilePath, dirs, cwd) {
+  if (!/\.(js|jsx|ts|tsx)$/.test(absFilePath)) return;
+  const fileRel = toPosix(path.relative(cwd, absFilePath));
+  const assetsRoot = toPosix(dirs.assetsDir) + '/';
+  const stylesRoot = toPosix(dirs.stylesDir) + '/';
+  if (fileRel.startsWith(assetsRoot) || fileRel.startsWith(stylesRoot)) return;
+  try {
+    const source = fs.readFileSync(absFilePath, 'utf8');
+    const fileDir = path.dirname(absFilePath);
+    const targetStyleBase = path.join(cwd, dirs.stylesDir, 'style');
+    const targetAssetsBase = path.join(cwd, dirs.assetsDir);
+    let updated = source;
+    // Rewrite imports to styles/style
+    updated = updated.replace(/from\s+(["'])((?:\.{1,2}\/)+)styles\/style\1/g, (m, quote) => {
+      const relToStyle = path.relative(fileDir, targetStyleBase);
+      let newPath = toPosix(relToStyle);
+      if (!newPath.startsWith('.')) newPath = './' + newPath;
+      return `from ${quote}${newPath}${quote}`;
+    });
+    // Rewrite imports to assets/*
+    updated = updated.replace(/from\s+(["'])((?:\.{1,2}\/)+)assets\/(.*?)\1/g, (m, quote, _rel, subPath) => {
+      const targetAbs = path.join(targetAssetsBase, subPath);
+      const relToTarget = path.relative(fileDir, targetAbs);
+      let newPath = toPosix(relToTarget).replace(/\.js$/i, '');
+      if (!newPath.startsWith('.')) newPath = './' + newPath;
+      return `from ${quote}${newPath}${quote}`;
+    });
+    if (updated !== source) fs.writeFileSync(absFilePath, updated, 'utf8');
+  } catch (e) {
+    console.warn('Warnung: Konnte Importe nicht anpassen für', absFilePath, '-', e.message);
+  }
+}
+
 const filesMap = {
   alert: [
     { src: 'components/ui/Alert.js', dest: 'components/ui/Alert.js' },
@@ -43,24 +139,34 @@ const filesMap = {
 };
 
 const args = process.argv.slice(2);
+const flags = parseFlags(args);
 
 function copyFiles(fileList) {
-  const copied = new Set(); // Verhindern von doppeltem Kopieren
+  const copied = new Set();
+  const cwd = process.cwd();
+  const dirs = resolveTargetDirs(cwd, flags);
 
-  fileList.forEach(file => {
+  [dirs.componentsDir, dirs.stylesDir, dirs.assetsDir].forEach((d) => {
+    if (!d) return;
+    try { fs.mkdirSync(path.join(cwd, d), { recursive: true }); } catch {}
+  });
+
+  fileList.forEach((file) => {
     const fileKey = `${file.src}:${file.dest}`;
     if (copied.has(fileKey)) return;
 
     const src = path.join(__dirname, file.src);
-    const dest = path.join(process.cwd(), file.dest);
+    const mappedDestRel = mapDestPath(file.dest, dirs);
+    const dest = path.join(cwd, mappedDestRel);
 
     try {
       fs.mkdirSync(path.dirname(dest), { recursive: true });
       fs.copyFileSync(src, dest);
       copied.add(fileKey);
-      console.log(`✓ Kopiert: ${file.src} → ${file.dest}`);
+      console.log(` Kopiert: '${toPosix(path.relative(cwd, src))}' -> '${toPosix(path.relative(cwd, dest))}'`);
+      adjustImportsForFile(dest, dirs, cwd);
     } catch (error) {
-      console.error(`✗ Fehler beim Kopieren von ${file.src}:`, error.message);
+      console.error(`Fehler beim Kopieren von '${toPosix(path.relative(cwd, src))}':`, error.message);
     }
   });
 }
@@ -74,6 +180,9 @@ if (args[0] === 'add' && args[1]) {
   }
   copyFiles(files);
 } else {
-  console.log('Verwendung: dynamiclayer add <komponente>');
+  console.log('Verwendung: dynamiclayer add <komponente> [--components=pfad] [--styles=pfad] [--assets=pfad]');
   console.log('Verfügbare Komponenten:', Object.keys(filesMap).join(', '), '\n');
+  console.log('Optional: dynamiclayer.config.json im Projektroot, z.B.:');
+  console.log('{ "componentsDir": "src/components", "stylesDir": "src/styles", "assetsDir": "src/assets" }');
 }
+

@@ -8,19 +8,22 @@
   "files": [
     "cli.js",
     "components/",
-    "styles/"
+    "styles/",
+    "assets/"
   ],
   "keywords": [
     "react-native",
+    "dynamiclayer",
+    "templates",
     "components",
     "cli"
   ],
   "author": "Ferdinand Fichtl",
   "license": "MIT",
-  "dependencies": {
-    "react-native-svg": "^13.9.0",
+  "peerDependencies": {
     "react-native-safe-area-context": "^4.5.3",
-    "react-native-reanimated": "^3.3.0"
+    "react-native-reanimated": "^3.3.0",
+    "react-native-svg": "^13.9.0"
   },
   "repository": {
     "type": "git",

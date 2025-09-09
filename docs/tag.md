@@ -11,7 +11,7 @@ dynamiclayer add tag
 Add this code example to your project to see how the component works:
 
 ```jsx
-import { Tag } from "@/components/ui/Tag"
+import Tag from "@/components/ui/Tag"
 
 // Different types
 <Tag>Default</Tag>

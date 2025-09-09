@@ -28,7 +28,7 @@ const TEXT_STYLE_MAP = {
   xs: { ...textStyles.text_xs_semibold },
 };
 
-const DEFAULT_IMAGE = require("../assets/ProfilePictures.png");
+const DEFAULT_IMAGE = "https://picsum.photos/seed/a/200";
 const DEFAULT_INITIALS = "Aa";
 
 const Avatar = ({ type = "icon", state = "default", size = "md", image = null }) => {

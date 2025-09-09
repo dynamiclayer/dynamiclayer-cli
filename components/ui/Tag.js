@@ -93,7 +93,7 @@ const Tag = ({
 };
 
 const styles = StyleSheet.create({
-  Tag: {
+  tag: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: rounded.rounded,
