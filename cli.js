@@ -25,7 +25,7 @@ function loadConfig(cwd) {
       const raw = fs.readFileSync(configPath, 'utf8');
       return JSON.parse(raw);
     } catch (e) {
-      console.warn('Warnung: Konnte dynamiclayer.config.json nicht lesen:', e.message);
+      console.warn('Warning: Could not read dynamiclayer.config.json:', e.message);
     }
   }
   return {};
@@ -96,7 +96,7 @@ function adjustImportsForFile(absFilePath, dirs, cwd) {
     });
     if (updated !== source) fs.writeFileSync(absFilePath, updated, 'utf8');
   } catch (e) {
-    console.warn('Warnung: Konnte Importe nicht anpassen für', absFilePath, '-', e.message);
+    console.warn('Warning: Could not adjust imports for', absFilePath, '-', e.message);
   }
 }
 
@@ -145,11 +145,15 @@ function copyFiles(fileList) {
   const copied = new Set();
   const cwd = process.cwd();
   const dirs = resolveTargetDirs(cwd, flags);
+  let copiedCount = 0;
 
   [dirs.componentsDir, dirs.stylesDir, dirs.assetsDir].forEach((d) => {
     if (!d) return;
     try { fs.mkdirSync(path.join(cwd, d), { recursive: true }); } catch {}
   });
+
+  console.log('Starting copy process');
+  console.log(`Targets: components='${toPosix(dirs.componentsDir)}', styles='${toPosix(dirs.stylesDir)}', assets='${toPosix(dirs.assetsDir)}'`);
 
   fileList.forEach((file) => {
     const fileKey = `${file.src}:${file.dest}`;
@@ -163,26 +167,29 @@ function copyFiles(fileList) {
       fs.mkdirSync(path.dirname(dest), { recursive: true });
       fs.copyFileSync(src, dest);
       copied.add(fileKey);
-      console.log(` Kopiert: '${toPosix(path.relative(cwd, src))}' -> '${toPosix(path.relative(cwd, dest))}'`);
+      copiedCount += 1;
+      console.log(`Copied: '${toPosix(path.relative(cwd, src))}' -> '${toPosix(path.relative(cwd, dest))}'`);
       adjustImportsForFile(dest, dirs, cwd);
     } catch (error) {
-      console.error(`Fehler beim Kopieren von '${toPosix(path.relative(cwd, src))}':`, error.message);
+      console.error(`Error copying '${toPosix(path.relative(cwd, src))}':`, error.message);
     }
   });
+
+  console.log(`Done: ${copiedCount} file(s) copied.`);
 }
 
 if (args[0] === 'add' && args[1]) {
   const name = args[1].toLowerCase();
   const files = filesMap[name];
   if (!files) {
-    console.error(`Unbekannte Komponente: ${name}`);
+    console.error(`Unknown component: ${name}`);
     process.exit(1);
   }
   copyFiles(files);
 } else {
-  console.log('Verwendung: dynamiclayer add <komponente> [--components=pfad] [--styles=pfad] [--assets=pfad]');
-  console.log('Verfügbare Komponenten:', Object.keys(filesMap).join(', '), '\n');
-  console.log('Optional: dynamiclayer.config.json im Projektroot, z.B.:');
+  console.log('Usage: dynamiclayer add <component> [--components=path] [--styles=path] [--assets=path]');
+  console.log('Available components:', Object.keys(filesMap).join(', '), '\n');
+  console.log('Optional: dynamiclayer.config.json in the project root, e.g.:');
   console.log('{ "componentsDir": "src/components", "stylesDir": "src/styles", "assetsDir": "src/assets" }');
 }
 

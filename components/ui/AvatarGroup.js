@@ -52,8 +52,7 @@ const AvatarGroup = ({ avatars = [], size = "lg", max = 2, style }) => {
             type={first.type || "icon"}
             state={first.state || "default"}
             size={size}
-            initials={first.initials}
-            source={first.source}
+            image={first.image || first.source}
           />
         </View>
       )}
@@ -70,8 +69,7 @@ const AvatarGroup = ({ avatars = [], size = "lg", max = 2, style }) => {
               type={second?.type || "icon"}
               state={second?.state || "default"}
               size={size}
-              initials={second?.initials}
-              source={second?.source}
+              image={second?.image || second?.source}
             />
           ) : (
             <View

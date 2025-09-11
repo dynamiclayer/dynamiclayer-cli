@@ -1,6 +1,6 @@
 # DynamicLayer CLI
 
-CLI zum schnellen Kopieren vorgefertigter React‑Native‑Komponenten in dein Projekt – inklusive Icons und Styles. Die CLI erkennt automatisch deinen Komponentenordner und passt Importe nach dem Kopieren an.
+A small CLI to quickly copy prebuilt React Native UI components into your project — including icons and styles. The CLI auto-detects your component folder layout and rewrites imports after copying.
 
 ## Installation
 
@@ -8,41 +8,41 @@ CLI zum schnellen Kopieren vorgefertigter React‑Native‑Komponenten in dein P
 npm install -g @dynamiclayer/cli
 ```
 
-## Peer‑Dependencies (im Zielprojekt installieren)
+## Peer Dependencies (install in your target project)
 
-Die kopierten Komponenten nutzen folgende Pakete. Bitte in deinem Projekt installieren (nicht in der CLI):
+Copied components rely on the following packages. Install these in your app (not in the CLI):
 
 ```bash
 npm install react-native-safe-area-context react-native-svg react-native-reanimated
 ```
 
-Hinweis: Diese sind als peerDependencies der CLI deklariert.
+Note: These are declared as peerDependencies of the CLI.
 
-## Verwendung
+## Usage
 
 ```bash
-dynamiclayer add <komponente>
+dynamiclayer add <component>
 
-# Optional mit Zielordnern
-dynamiclayer add <komponente> \
+# Optional: choose target folders
+dynamiclayer add <component> \
   --components=src/components \
   --styles=src/styles \
   --assets=src/assets
 ```
 
-Unterstützte Komponenten:
+Supported components:
 - `alert`
 - `avatar`
 - `avatargroup`
 - `badge`
 - `tag`
-- `theme` (kopiert nur `styles/style.js`)
+- `theme` (copies only `styles/style.js`)
 
-## Auto‑Erkennung & Konfiguration
+## Auto-Detection & Config
 
-- Auto‑Erkennung prüft in deinem Projekt: `src/components` → `src` → `app/components` → Projektroot.
-- Daraus werden Zielpfade für `components/`, `styles/`, `assets/` abgeleitet.
-- Alternative: Lege im Projektroot eine `dynamiclayer.config.json` an:
+- Auto-detection checks in your project: `src/components` → `src` → `app/components` → project root.
+- From this, target paths for `components/`, `styles/`, and `assets/` are derived.
+- Alternatively, add a `dynamiclayer.config.json` in your project root:
 
 ```json
 {
@@ -52,13 +52,13 @@ Unterstützte Komponenten:
 }
 ```
 
-## Import‑Rewrites
+## Import Rewrites
 
-Nach dem Kopieren korrigiert die CLI Importpfade in den Komponenten automatisch:
-- `../../styles/style` wird relativ zum neuen Speicherort angepasst.
-- `../../assets/...` (z. B. Icons) wird auf den neuen `assets`‑Pfad gemappt.
+After copying, the CLI automatically fixes import paths in components:
+- Imports to `../../styles/style` are rewritten relative to the new location.
+- Imports to `../../assets/...` (e.g., icons) are mapped to the new `assets` path.
 
-## Beispiel‑Struktur
+## Example Structure
 
 ```
 your-project/
@@ -75,7 +75,7 @@ your-project/
     style.js
 ```
 
-## Lizenz
+## License
 
-MIT – siehe [LICENSE](LICENSE).
+MIT — see `LICENSE`.
 

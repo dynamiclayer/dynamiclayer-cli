@@ -3,7 +3,7 @@
 Use this command to install the component in your project:
 
 ```bash
-dynamiclayer add avatar-group
+dynamiclayer add avatargroup
 ```
 
 ## Usage
@@ -11,7 +11,7 @@ dynamiclayer add avatar-group
 Add this code example to your project to see how the component works:
 
 ```jsx
-import { AvatarGroup } from "@/components/ui/avatar-group"
+import AvatarGroup from "@/components/ui/AvatarGroup"
 
 // Basic usage with default settings
 <AvatarGroup avatars={[
@@ -22,8 +22,8 @@ import { AvatarGroup } from "@/components/ui/avatar-group"
 // With maximum display limit
 <AvatarGroup 
   avatars={[
-    { type: "image", source: require("./user1.png") },
-    { type: "image", source: require("./user2.png") },
+    { type: "image", image: require("./user1.png") },
+    { type: "image", image: require("./user2.png") },
     { type: "icon" },
     { type: "icon" }
   ]}
@@ -41,7 +41,7 @@ import { AvatarGroup } from "@/components/ui/avatar-group"
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | avatars | Array<AvatarProps> | [] | Array of avatar configurations |
-| size | 'xs' \| 'lg' | Controls the size of all avatars |
+| size | 'xs' \| 'lg' | 'lg' | Controls the size of all avatars |
 | max | number | 2 | Maximum number of avatars to display before showing count |
 | style | ViewStyle | - | Additional styles for the container |
 
@@ -51,10 +51,9 @@ Each avatar in the `avatars` array accepts the same props as the Avatar componen
 
 ```typescript
 type AvatarProps = {
-  type?: 'icon' \| 'initials' \| 'image';
-  state?: 'default' \| 'online' \| 'offline';
-  source?: ImageSourcePropType;  // For type="image"
-  initials?: string;             // For type="initials"
+  type?: 'icon' | 'initials' | 'image';
+  state?: 'default' | 'online' | 'offline';
+  image?: ImageSourcePropType;  // For type="image"
 }
 ```
 
@@ -64,8 +63,8 @@ type AvatarProps = {
 // Mix of different avatar types
 <AvatarGroup 
   avatars={[
-    { type: "image", source: userImage, state: "online" },
-    { type: "initials", initials: "JD" },
+    { type: "image", image: userImage, state: "online" },
+    { type: "initials" },
     { type: "icon", state: "offline" }
   ]}
   size="lg"

@@ -11,12 +11,12 @@ dynamiclayer add avatar
 Add this code example to your project to see how the component works:
 
 ```jsx
-import { Avatar } from "@/components/ui/avatar"
+import Avatar from "@/components/ui/Avatar"
 
 // Different types
 <Avatar type="icon" />
 <Avatar type="initials" />
-<Avatar type="image" source={require('./profile.png')} />
+<Avatar type="image" image={require('./profile.png')} />
 
 // Different states
 <Avatar state="default" />
@@ -62,7 +62,6 @@ import { Avatar } from "@/components/ui/avatar"
 <Avatar 
   type="initials" 
   size="md"
-  initials="JD"  // Default: "Aa"
 />
 
 // Image avatar with offline status and custom image

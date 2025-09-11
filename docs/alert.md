@@ -5,7 +5,7 @@ The Alert component is a versatile notification banner that appears at the top o
 ## Usage
 
 ```jsx
-import Alert from '../components/ui/Alert';
+import Alert from "@/components/ui/Alert";
 
 // Basic usage
 <Alert 

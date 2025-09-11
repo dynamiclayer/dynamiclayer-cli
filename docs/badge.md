@@ -1,8 +1,14 @@
-# Badge
+# Badge Component
 
-Die `Badge`-Komponente wird verwendet, um Benachrichtigungen oder Zählungen anzuzeigen, die mit einem Element verknüpft sind. Sie kann als Punkt oder als Pille mit Text angezeigt werden.
+The `Badge` component shows notifications or counts attached to an element. It can render as a small dot or as a pill with text.
 
-## Verwendung
+## Install
+
+```bash
+dynamiclayer add badge
+```
+
+## Usage
 
 ```jsx
 import React from 'react';
@@ -11,16 +17,16 @@ import Badge from '@/components/ui/Badge';
 
 const MyComponent = () => (
   <View>
-    {/* Einfacher Punkt-Badge */}
+    {/* Simple dot badge */}
     <Badge size="sm" />
 
-    {/* Badge mit Zählung */}
+    {/* Badge with count */}
     <Badge count={5} />
 
-    {/* Badge mit maximaler Zählung und Offset */}
+    {/* Badge with max count and offset */}
     <Badge count={120} maxCount={99} offsetX={-5} offsetY={-5} />
 
-    {/* Badge mit Benachrichtigungen und angezeigter Null */}
+    {/* Badge with notifications and showing zero */}
     <Badge notifications={0} showZero={true} />
   </View>
 );
@@ -30,17 +36,18 @@ export default MyComponent;
 
 ## Props
 
-| Prop          | Typ       | Standardwert | Beschreibung                                                              |
-| :------------ | :-------- | :----------- | :------------------------------------------------------------------------ |
-| `size`        | `string`  | `'md'`       | Die Größe des Badges. `'sm'` für einen Punkt, `'md'` für eine Pille.    |
-| `count`       | `number`  | `undefined`  | Die anzuzeigende Zählung.                                                 |
-| `notifications` | `number`  | `undefined`  | Alternative zur `count`-Prop für Benachrichtigungen.                    |
-| `showZero`    | `boolean` | `false`      | Wenn `true`, wird der Badge auch bei einem Wert von 0 angezeigt.         |
-| `maxCount`    | `number`  | `99`         | Der maximale Wert, der angezeigt wird, bevor `maxCount+` angezeigt wird. |
-| `absolute`    | `boolean` | `true`       | Wenn `true`, wird der Badge absolut positioniert.                        |
-| `offsetX`     | `number`  | `0`          | Horizontaler Offset, wenn `absolute` auf `true` gesetzt ist.            |
-| `offsetY`     | `number`  | `0`          | Vertikaler Offset, wenn `absolute` auf `true` gesetzt ist.              |
-| `style`       | `StyleProp` | `undefined`  | Stil für den Container des Badges.                                        |
-| `badgeStyle`  | `StyleProp` | `undefined`  | Stil für den Badge selbst (Punkt oder Pille).                             |
-| `textStyle`   | `StyleProp` | `undefined`  | Stil für den Text innerhalb des Badges.                                   |
-| `...rest`     | `any`     | `undefined`  | Alle anderen Props, die an die `View`-Komponente übergeben werden.      |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | 'sm' | 'md' | Size of the badge. `'sm'` renders a dot, `'md'` renders a pill |
+| `count` | number | - | The numeric count to display |
+| `notifications` | number | - | Alternative to `count` for notification counts |
+| `showZero` | boolean | false | If true, shows the badge when the value is 0 |
+| `maxCount` | number | 99 | Maximum displayed value before showing `maxCount+` |
+| `absolute` | boolean | true | If true, positions the badge absolutely |
+| `offsetX` | number | 0 | Horizontal offset when `absolute` is true |
+| `offsetY` | number | 0 | Vertical offset when `absolute` is true |
+| `style` | ViewStyle | - | Container style |
+| `badgeStyle` | ViewStyle | - | Style for the dot or pill |
+| `textStyle` | TextStyle | - | Style for the text inside the pill |
+| `...rest` | any | - | Other props passed to the container View |
+
