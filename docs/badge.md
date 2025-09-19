@@ -1,6 +1,6 @@
-# Badge Component
+# Badge
 
-The `Badge` component shows notifications or counts attached to an element. It can render as a small dot or as a pill with text.
+Small dot or pill to show counts or notifications. Can be absolutely positioned over another element.
 
 ## Install
 
@@ -11,43 +11,57 @@ dynamiclayer add badge
 ## Usage
 
 ```jsx
-import React from 'react';
-import { View } from 'react-native';
-import Badge from '@/components/ui/Badge';
+import { View } from "react-native";
+import Badge from "@/components/ui/Badge";
 
-const MyComponent = () => (
-  <View>
-    {/* Simple dot badge */}
-    <Badge size="sm" />
+<View>
+  {/* Dot */}
+  <Badge size="sm" />
 
-    {/* Badge with count */}
-    <Badge count={5} />
+  {/* Count */}
+  <Badge count={5} />
 
-    {/* Badge with max count and offset */}
-    <Badge count={120} maxCount={99} offsetX={-5} offsetY={-5} />
+  {/* Max + offsets */}
+  <Badge count={120} maxCount={99} offsetX={-5} offsetY={-5} />
 
-    {/* Badge with notifications and showing zero */}
-    <Badge notifications={0} showZero={true} />
-  </View>
-);
-
-export default MyComponent;
+  {/* Show zero */}
+  <Badge notifications={0} showZero />
+</View>
 ```
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `size` | 'sm' | 'md' | Size of the badge. `'sm'` renders a dot, `'md'` renders a pill |
-| `count` | number | - | The numeric count to display |
-| `notifications` | number | - | Alternative to `count` for notification counts |
-| `showZero` | boolean | false | If true, shows the badge when the value is 0 |
-| `maxCount` | number | 99 | Maximum displayed value before showing `maxCount+` |
-| `absolute` | boolean | true | If true, positions the badge absolutely |
-| `offsetX` | number | 0 | Horizontal offset when `absolute` is true |
-| `offsetY` | number | 0 | Vertical offset when `absolute` is true |
-| `style` | ViewStyle | - | Container style |
-| `badgeStyle` | ViewStyle | - | Style for the dot or pill |
-| `textStyle` | TextStyle | - | Style for the text inside the pill |
-| `...rest` | any | - | Other props passed to the container View |
+| `size` | `'sm' | 'md'` | `'md'` | `'sm'` renders a dot, `'md'` renders a pill. |
+| `count` | `number` | `null` | Value to display. |
+| `notifications` | `number` | `null` | Alternative to `count`. |
+| `showZero` | `boolean` | `false` | Render the badge when the value is `0`. |
+| `maxCount` | `number` | `99` | Switch to `maxCount+` when exceeded. |
+| `absolute` | `boolean` | `true` | Position absolutely relative to parent. |
+| `offsetX` | `number` | `0` | Horizontal offset when `absolute`. |
+| `offsetY` | `number` | `0` | Vertical offset when `absolute`. |
+| `style` | `ViewStyle` | `null` | Container style override. |
+| `badgeStyle` | `ViewStyle` | `null` | Dot or pill style override. |
+| `textStyle` | `TextStyle` | `null` | Label text style override. |
 
+## Sizes
+
+| Size | Shape | Height | Text Style |
+|------|-------|--------|------------|
+| `sm` | Dot | 8 px | `null` |
+| `md` | Pill | 16 px | `textStyles.text_xs_semibold` |
+
+## Examples
+
+```jsx
+<Badge />
+<Badge count={34} maxCount={99} />
+<Badge count={3} absolute={false} />
+<Badge count={0} showZero badgeStyle={{ backgroundColor: "#2dd4bf" }} />
+```
+
+## Related
+
+- docs/alert.md - Promote important notifications
+- docs/tag.md - Inline status labels

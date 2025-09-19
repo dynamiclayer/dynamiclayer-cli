@@ -1,33 +1,21 @@
 # DynamicLayer CLI
 
-A small CLI to quickly copy prebuilt React Native UI components into your project — including icons and styles. The CLI auto-detects your component folder layout and rewrites imports after copying.
+Copy high‑quality React Native UI components into your project in seconds — including icons and theme tokens. The CLI auto‑detects your folder layout and rewrites imports after copying.
 
-## Installation
+## Install
 
 ```bash
 npm install -g @dynamiclayer/cli
 ```
 
-## Peer Dependencies (install in your target project)
-
-Copied components rely on the following packages. Install these in your app (not in the CLI):
+## Quick Start
 
 ```bash
-npm install react-native-safe-area-context react-native-svg react-native-reanimated
-```
-
-Note: These are declared as peerDependencies of the CLI.
-
-## Usage
-
-```bash
+# Copy a component
 dynamiclayer add <component>
 
 # Optional: choose target folders
-dynamiclayer add <component> \
-  --components=src/components \
-  --styles=src/styles \
-  --assets=src/assets
+dynamiclayer add <component> --components=src/components --styles=src/styles --assets=src/assets
 ```
 
 Supported components:
@@ -38,11 +26,19 @@ Supported components:
 - `tag`
 - `theme` (copies only `styles/style.js`)
 
-## Auto-Detection & Config
+Docs for each component and the CLI are in `docs/`:
+- docs/alert.md
+- docs/avatar.md
+- docs/avatar-group.md
+- docs/badge.md
+- docs/tag.md
+- docs/cli.md
 
-- Auto-detection checks in your project: `src/components` → `src` → `app/components` → project root.
-- From this, target paths for `components/`, `styles/`, and `assets/` are derived.
-- Alternatively, add a `dynamiclayer.config.json` in your project root:
+## Auto‑Detection and Config
+
+- The CLI looks for common roots in your project: `src/components` → `src` → `app/components` → project root.
+- From this, it derives target paths for `components/`, `styles/`, and `assets/`.
+- Alternatively, add a `dynamiclayer.config.json` at your project root:
 
 ```json
 {
@@ -73,6 +69,14 @@ your-project/
       Badge.js
   styles/
     style.js
+```
+
+## Peer Dependencies (install in your app)
+
+Components rely on these packages. Install them in your target app (not the CLI):
+
+```bash
+npm install react-native-safe-area-context react-native-svg react-native-reanimated
 ```
 
 ## License

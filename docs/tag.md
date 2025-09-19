@@ -1,6 +1,8 @@
-# Tag Component
+# Tag
 
-Use this command to install the component in your project:
+Compact label for metadata or status. Supports variants, sizes, and custom text.
+
+## Install
 
 ```bash
 dynamiclayer add tag
@@ -8,26 +10,24 @@ dynamiclayer add tag
 
 ## Usage
 
-Add this code example to your project to see how the component works:
-
 ```jsx
-import Tag from "@/components/ui/Tag"
+import Tag from "@/components/ui/Tag";
 
-// Different types
+// Variants
 <Tag>Default</Tag>
 <Tag type="warning">Warning</Tag>
 <Tag type="success">Success</Tag>
 <Tag type="error">Error</Tag>
 
-// Different sizes
+// Sizes
 <Tag size="sm">Small</Tag>
 <Tag size="md">Medium</Tag>
 <Tag size="lg">Large</Tag>
 
-// With custom text
+// With text prop
 <Tag text="Custom Text" />
 
-// As a child component
+// With children
 <Tag>Children Text</Tag>
 ```
 
@@ -35,64 +35,39 @@ import Tag from "@/components/ui/Tag"
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| type | 'default' \| 'warning' \| 'success' \| 'error' | 'default' | Sets the tag style variant |
-| size | 'sm' \| 'md' \| 'lg' | 'md' | Controls the size of the tag |
-| text | string | 'Tag' | The text content of the tag |
-| style | ViewStyle | - | Additional styles for the tag container |
-| textStyle | TextStyle | - | Additional styles for the tag text |
-| children | ReactNode | - | Alternative to text prop |
+| `type` | `'default' | 'warning' | 'success' | 'error'` | `'default'` | Visual variant. |
+| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Component size. |
+| `text` | `string` | `'Tag'` | Text content when children are not provided. |
+| `style` | `ViewStyle` | `null` | Container style override. |
+| `textStyle` | `TextStyle` | `null` | Label text style override. |
+| `children` | `ReactNode` | `null` | Alternative to `text`. |
 
-## Size Dimensions
+## Sizes
 
-| Size | Height | Horizontal Padding | Text Size |
-|------|--------|-------------------|-----------|
-| sm | 20px | 4px | xs |
-| md | 24px | 8px | sm |
-| lg | 28px | 8px | base |
+| Size | Height | Padding (X/Y) | Text Style |
+|------|--------|---------------|------------|
+| `sm` | 20 px | 4 / 2 px | `textStyles.text_xs_semibold` |
+| `md` | 24 px | 8 / 2 px | `textStyles.text_sm_semibold` |
+| `lg` | 28 px | 8 / 2 px | `textStyles.text_base_semibold` |
 
-## Color Variants
+## Variants
 
-| Type | Background | Text Color |
-|------|------------|------------|
-| default | grey100 | grey600 |
-| warning | yellow300 | yellow700 |
-| success | green100 | green700 |
-| error | red100 | red600 |
+| Type | Background | Text |
+|------|------------|------|
+| `default` | `colors.grey100` | `colors.grey600` |
+| `warning` | `colors.yellow300` | `colors.yellow700` |
+| `success` | `colors.green100` | `colors.green700` |
+| `error` | `colors.red100` | `colors.red600` |
 
 ## Examples
 
 ```jsx
-// Success tag with custom text
-<Tag 
-  type="success" 
-  text="Completed" 
-/>
-
-// Large warning tag
-<Tag 
-  type="warning" 
-  size="lg" 
-  text="Pending" 
-/>
-
-// Small error tag with custom styles
-<Tag 
-  type="error" 
-  size="sm" 
-  text="Failed"
-  style={{ marginLeft: 8 }}
-  textStyle={{ fontWeight: 'bold' }}
-/>
-
-// Using children prop
-<Tag type="success">
-  Task Complete
-</Tag>
+<Tag />
+<Tag type="success" text="Live" />
+<Tag size="sm" type="warning">Beta</Tag>
 ```
 
-## Content Priority
+## Related
 
-The tag content is determined in the following order:
-1. Children prop (if provided)
-2. Text prop (if provided)
-3. Default text "Tag"
+- docs/badge.md - Dot or count badge
+- docs/alert.md - High-attention messaging

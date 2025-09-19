@@ -1,6 +1,8 @@
-# Avatar Group Component
+# Avatar Group
 
-Use this command to install the component in your project:
+Display a compact stack of avatars with an optional "+N" counter when the list exceeds `max`.
+
+## Install
 
 ```bash
 dynamiclayer add avatargroup
@@ -8,19 +10,14 @@ dynamiclayer add avatargroup
 
 ## Usage
 
-Add this code example to your project to see how the component works:
-
 ```jsx
-import AvatarGroup from "@/components/ui/AvatarGroup"
+import AvatarGroup from "@/components/ui/AvatarGroup";
 
-// Basic usage with default settings
-<AvatarGroup avatars={[
-  { type: "icon" },
-  { type: "initials" }
-]} />
+// Basic two-person stack
+<AvatarGroup avatars={[{ type: "icon" }, { type: "initials" }]} />
 
-// With maximum display limit
-<AvatarGroup 
+// Limit visible avatars
+<AvatarGroup
   avatars={[
     { type: "image", image: require("./user1.png") },
     { type: "image", image: require("./user2.png") },
@@ -31,7 +28,7 @@ import AvatarGroup from "@/components/ui/AvatarGroup"
   size="lg"
 />
 
-// Different sizes
+// Sizes
 <AvatarGroup avatars={[...]} size="xs" />
 <AvatarGroup avatars={[...]} size="lg" />
 ```
@@ -40,65 +37,35 @@ import AvatarGroup from "@/components/ui/AvatarGroup"
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| avatars | Array<AvatarProps> | [] | Array of avatar configurations |
-| size | 'xs' \| 'lg' | 'lg' | Controls the size of all avatars |
-| max | number | 2 | Maximum number of avatars to display before showing count |
-| style | ViewStyle | - | Additional styles for the container |
+| `avatars` | `AvatarProps[]` | `[]` | Array of avatar configurations. |
+| `size` | `'xs' | 'lg'` | `'lg'` | Diameter of all avatars. |
+| `max` | `number` | `2` | Max visible avatars before showing `+N`. |
+| `style` | `ViewStyle` | `null` | Container style override. |
 
-### AvatarProps Type
+`AvatarProps` matches the Avatar component:
 
-Each avatar in the `avatars` array accepts the same props as the Avatar component:
-
-```typescript
+```ts
 type AvatarProps = {
-  type?: 'icon' | 'initials' | 'image';
-  state?: 'default' | 'online' | 'offline';
-  image?: ImageSourcePropType;  // For type="image"
-}
-```
-
-## Examples
-
-```jsx
-// Mix of different avatar types
-<AvatarGroup 
-  avatars={[
-    { type: "image", image: userImage, state: "online" },
-    { type: "initials" },
-    { type: "icon", state: "offline" }
-  ]}
-  size="lg"
-/>
-
-// Custom styling
-<AvatarGroup 
-  avatars={[...]}
-  size="lg"
-  style={{ marginBottom: 16 }}
-/>
-
-// Show all avatars
-<AvatarGroup 
-  avatars={[
-    { type: "icon" },
-    { type: "icon" }
-  ]}
-  max={999}
-  size="lg"
-/>
+  type?: "icon" | "initials" | "image";
+  state?: "default" | "online" | "offline";
+  image?: ImageSourcePropType;
+};
 ```
 
 ## Behavior
 
-1. If there are 2 avatars:
-   - Both avatars are displayed overlapping
-   - No count indicator is shown
+- First avatar always renders in front
+- Second slot toggles between avatar and `+N` counter based on `max`
+- Avatars overlap by 16 px to create the stack
+- Container resizes to fit one or two avatars automatically
 
-2. If there are 3 or more avatars:
-   - First avatar is displayed
-   - A count indicator shows the number of remaining avatars
-   - The count appears in a circle matching the avatar size
+## Examples
 
-3. Layout:
-   - Avatars overlap by 16 pixels
-   - Second avatar or count indicator is positioned behind the first avatar
+```jsx
+<AvatarGroup avatars={[{ type: "image", image: require("./ceo.png") }]} size="lg" />
+<AvatarGroup avatars={[{ type: "icon" }, { type: "icon" }, { type: "icon" }]} max={1} size="xs" />
+```
+
+## Related
+
+- docs/avatar.md - Individual avatar documentation

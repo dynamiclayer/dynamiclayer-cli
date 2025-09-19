@@ -1,79 +1,65 @@
-# Alert Component
+# Alert
 
-The Alert component is a versatile notification banner that appears at the top of the screen. It provides feedback about an operation's state through different types of alerts with customizable content.
+Top-of-screen banner for success, error, warning, and information messages. Supports auto-dismiss, manual close, and safe-area aware layout.
+
+## Install
+
+```bash
+dynamiclayer add alert
+```
 
 ## Usage
 
 ```jsx
 import Alert from "@/components/ui/Alert";
 
-// Basic usage
-<Alert 
-  type="success"
-  title="Success!"
-  description="Your changes have been saved."
-/>
+// Success
+<Alert type="success" title="Success!" description="Saved." />
 
-// Alert that stays visible
-<Alert 
-  type="error"
-  title="Error"
-  description="Something went wrong."
-  stay={true}
-/>
+// Error that stays visible
+<Alert type="error" title="Error" description="Something went wrong." stay />
 
-// Alert without close icon
-<Alert 
-  type="information"
-  title="Info"
-  description="New updates available."
-  closeIcon={false}
-/>
+// Without close icon
+<Alert type="information" title="Info" description="New update available." closeIcon={false} />
 ```
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `type` | string | `"information"` | The type of alert. Can be `"success"`, `"error"`, `"warning"`, or `"information"`. |
-| `title` | string | - | The main heading text of the alert. |
-| `description` | string | - | The detailed message of the alert. |
-| `closeIcon` | boolean | `true` | Whether to show the close button. |
-| `stay` | boolean | `false` | If `true`, the alert will not automatically dismiss. |
+| `type` | `'success' | 'error' | 'warning' | 'information'` | `'information'` | Visual style and icon. |
+| `title` | `string` | `null` | Main heading text. |
+| `description` | `string` | `null` | Supporting message. |
+| `closeIcon` | `boolean` | `true` | Show the close button. |
+| `stay` | `boolean` | `false` | Prevent auto-dismiss. |
 
-## Features
+## Behavior
 
-- Animated entrance and exit
-- Four different types with corresponding icons
-- Auto-dismissal after 6 seconds (configurable)
-- Manual dismissal through close button
-- Safe area aware positioning
-- Accessibility support
-- Responsive layout
+- Animated slide-in and fade-out
+- Auto-dismisses after roughly 6 seconds unless `stay` is set
+- Close button provides manual dismissal
+- Layout respects safe-area insets
 
-## Styling
+## Theming
 
-The Alert component uses the application's design tokens for colors, padding, and typography. It inherits from the following style configurations:
-
-- Background: `colors.white`
-- Border: `colors.grey200`
+Uses tokens from `styles/style.js` for colors, spacing, radius, and typography:
 - Title: `textStyles.text_base_semibold`
 - Description: `textStyles.text_base_regular`
-- Icon size: 24x24 pixels
-- Border radius: `rounded.rounded_lg`
-- Padding: `paddings.p_16`
-
-## Animation
-
-The Alert includes smooth animations for:
-- Sliding in from the top
-- Fading in/out
-- Icon scaling
-- Collapsing on dismiss
 
 ## Accessibility
 
-The component includes the following accessibility features:
-- Role set to "alert"
-- Close button with accessible label "Close notification"
-- Hit slop areas for better touch targets
+- Screen reader role: `alert`
+- Close button includes an accessible label
+- Generous hit slop on touch targets
+
+## Examples
+
+```jsx
+<Alert type="warning" title="Heads up" description="Check your internet connection." />
+<Alert type="success" title="Saved" description="Changes stored successfully." stay />
+```
+
+## Related
+
+- docs/badge.md - Show counts on icons
+- docs/tag.md - Label statuses inline
