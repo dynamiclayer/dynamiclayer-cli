@@ -1,6 +1,6 @@
 {
   "name": "@dynamiclayer/cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Reusable React Native components and CLI to copy them",
   "bin": {
     "dynamiclayer": "./cli.js"
