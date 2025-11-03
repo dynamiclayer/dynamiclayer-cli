@@ -29,6 +29,7 @@
     "type": "git",
     "url": "https://github.com/dynamiclayer/dynamiclayer-cli.git"
   },
+  "homepage": "https://github.com/npm/example#readme",
   "publishConfig": {
     "access": "public"
   }

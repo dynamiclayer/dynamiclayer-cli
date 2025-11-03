@@ -20,7 +20,6 @@ const STATUS_MAP = {
   xs: { dotSize: 12, offsetLeft: 22, offsetTop: 30 },
 };
 
-// Typography per size
 const TEXT_STYLE_MAP = {
   lg: { ...textStyles.text_xl_semibold },
   md: { ...textStyles.text_lg_semibold  },
@@ -28,8 +27,30 @@ const TEXT_STYLE_MAP = {
   xs: { ...textStyles.text_xs_semibold },
 };
 
-const DEFAULT_IMAGE = "https://picsum.photos/seed/a/200";
+const DEFAULT_IMAGE_URI = "https://picsum.photos/seed/a/200";
 const DEFAULT_INITIALS = "Aa";
+
+const resolveImageSource = (value) => {
+  if (!value) {
+    return { uri: DEFAULT_IMAGE_URI };
+  }
+
+  if (typeof value === "string") {
+    return { uri: value };
+  }
+
+  // Bundled images (e.g. require) are exposed as numbers in React Native.
+  if (typeof value === "number") {
+    return value;
+  }
+
+  // Allow passing objects that already follow ImageSourcePropType.
+  if (value?.uri || Array.isArray(value)) {
+    return value;
+  }
+
+  return { uri: DEFAULT_IMAGE_URI };
+};
 
 const Avatar = ({ type = "icon", state = "default", size = "md", image = null }) => {
   const diameter = SIZE_MAP[size];
@@ -77,7 +98,7 @@ const Avatar = ({ type = "icon", state = "default", size = "md", image = null })
 
         {type === "image" && (
           <Image
-            source={image || DEFAULT_IMAGE}
+            source={resolveImageSource(image)}
             resizeMode="cover"
             style={styles.imageFill}
           />

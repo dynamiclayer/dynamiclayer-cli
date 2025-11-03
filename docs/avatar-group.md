@@ -1,6 +1,6 @@
 # Avatar Group
 
-Display a compact stack of avatars with an optional "+N" counter when the list exceeds `max`.
+Stacks two avatars with overlap and swaps the second slot for a `+N` counter when the list exceeds `max`. Great for collaboration lists or shared owners.
 
 ## Install
 
@@ -13,10 +13,8 @@ dynamiclayer add avatargroup
 ```jsx
 import AvatarGroup from "@/components/ui/AvatarGroup";
 
-// Basic two-person stack
 <AvatarGroup avatars={[{ type: "icon" }, { type: "initials" }]} />
 
-// Limit visible avatars
 <AvatarGroup
   avatars={[
     { type: "image", image: require("./user1.png") },
@@ -27,37 +25,34 @@ import AvatarGroup from "@/components/ui/AvatarGroup";
   max={2}
   size="lg"
 />
-
-// Sizes
-<AvatarGroup avatars={[...]} size="xs" />
-<AvatarGroup avatars={[...]} size="lg" />
 ```
+
+- Provide the avatars you want shown first; the remainder feeds the counter.
+- `size` switches between 32 px (`xs`), 40 px (`sm`), 48 px (`md`), and 56 px (`lg`) layouts.
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `avatars` | `AvatarProps[]` | `[]` | Array of avatar configurations. |
-| `size` | `'xs' | 'lg'` | `'lg'` | Diameter of all avatars. |
+| `avatars` | `AvatarProps[]` | `[]` | Data passed through to the Avatar component. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'lg'` | Diameter and typography preset. |
 | `max` | `number` | `2` | Max visible avatars before showing `+N`. |
-| `style` | `ViewStyle` | `null` | Container style override. |
+| `style` | `ViewStyle` | `null` | Optional wrapper override. |
 
-`AvatarProps` matches the Avatar component:
+## Notes
 
-```ts
-type AvatarProps = {
-  type?: "icon" | "initials" | "image";
-  state?: "default" | "online" | "offline";
-  image?: ImageSourcePropType;
-};
-```
+- When `avatars.length <= max`, both slots render full avatars.
+- `AvatarProps` is the same shape documented in `docs/avatar.md`.
+- First avatar sits on top; second slot overlaps by 16 px.
+- Counter shows how many entries remain once the visible slots are filled, so the first avatar is not double-counted.
+- Wrapper size expands automatically to fit one or two avatars.
 
-## Behavior
+## Variants
 
-- First avatar always renders in front
-- Second slot toggles between avatar and `+N` counter based on `max`
-- Avatars overlap by 16 px to create the stack
-- Container resizes to fit one or two avatars automatically
+| Variant | When to use | Key change |
+|---------|-------------|-----------|
+| `size="xs"` | Dense lists and tables | Smaller avatars and counter text |
+| `size="lg"` | Feature surfaces | Larger avatars with bold counter |
 
 ## Examples
 
@@ -66,6 +61,8 @@ type AvatarProps = {
 <AvatarGroup avatars={[{ type: "icon" }, { type: "icon" }, { type: "icon" }]} max={1} size="xs" />
 ```
 
+- Combine with `Badge` to mark unread conversations that involve the group.
+
 ## Related
 
-- docs/avatar.md - Individual avatar documentation
+- docs/avatar.md - Individual avatar reference

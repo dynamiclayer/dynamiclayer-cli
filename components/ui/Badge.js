@@ -5,7 +5,6 @@ import { colors, paddings, rounded, textStyles } from '../../styles/style';
 
 const Badge = memo(({
   size = 'md',
-  count,
   notifications,
   showZero = false,
   maxCount = 99,
@@ -17,7 +16,7 @@ const Badge = memo(({
   textStyle,
   ...rest
 }) => {
-  const value = typeof count === 'number' ? count : notifications;
+  const value = notifications;
 
   if (!showZero && (!value || value <= 0)) return null;
 

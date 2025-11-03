@@ -1,6 +1,6 @@
 # Alert
 
-Top-of-screen banner for success, error, warning, and information messages. Supports auto-dismiss, manual close, and safe-area aware layout.
+Top-of-screen banner for success, error, warning, or information messages. Animates in, auto-dismisses by default, and respects safe-area padding.
 
 ## Install
 
@@ -13,44 +13,40 @@ dynamiclayer add alert
 ```jsx
 import Alert from "@/components/ui/Alert";
 
-// Success
 <Alert type="success" title="Success!" description="Saved." />
-
-// Error that stays visible
 <Alert type="error" title="Error" description="Something went wrong." stay />
-
-// Without close icon
 <Alert type="information" title="Info" description="New update available." closeIcon={false} />
 ```
+
+- `stay` keeps the banner visible until dismissed manually.
+- Set `closeIcon={false}` for passive information that should not be closed.
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `type` | `'success' | 'error' | 'warning' | 'information'` | `'information'` | Visual style and icon. |
-| `title` | `string` | `null` | Main heading text. |
-| `description` | `string` | `null` | Supporting message. |
+| `title` | `string` | `null` | Heading text. |
+| `description` | `string` | `null` | Body text. |
 | `closeIcon` | `boolean` | `true` | Show the close button. |
-| `stay` | `boolean` | `false` | Prevent auto-dismiss. |
+| `stay` | `boolean` | `false` | Block the auto-dismiss timer. |
 
-## Behavior
+## Notes
 
-- Animated slide-in and fade-out
-- Auto-dismisses after roughly 6 seconds unless `stay` is set
-- Close button provides manual dismissal
-- Layout respects safe-area insets
+- Provide at least one of `title` or `description`.
+- `stay` disables the timer only; the close button still works when present.
+- Banner slides in from the top, then fades and collapses on dismiss.
+- Auto-dismiss fires after roughly six seconds unless `stay` is true.
+- Close button includes generous hit slop for easier taps.
 
-## Theming
+## Variants
 
-Uses tokens from `styles/style.js` for colors, spacing, radius, and typography:
-- Title: `textStyles.text_base_semibold`
-- Description: `textStyles.text_base_regular`
-
-## Accessibility
-
-- Screen reader role: `alert`
-- Close button includes an accessible label
-- Generous hit slop on touch targets
+| Variant | When to use | Key styling |
+|---------|-------------|-------------|
+| `success` | Confirm a finished task | Green icon on white banner |
+| `error` | Blocking issues | Red icon on white banner |
+| `warning` | Heads-up messages | Yellow icon for caution |
+| `information` | Neutral updates | Violet-accented info icon |
 
 ## Examples
 
@@ -58,6 +54,8 @@ Uses tokens from `styles/style.js` for colors, spacing, radius, and typography:
 <Alert type="warning" title="Heads up" description="Check your internet connection." />
 <Alert type="success" title="Saved" description="Changes stored successfully." stay />
 ```
+
+- Pair alerts with inline actions so users can resolve issues quickly.
 
 ## Related
 

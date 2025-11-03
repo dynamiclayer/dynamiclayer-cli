@@ -129,6 +129,19 @@ const filesMap = {
     { src: 'components/ui/Badge.js', dest: 'components/ui/Badge.js' },
     { src: 'styles/style.js', dest: 'styles/style.js' }
   ],
+  button: [
+    { src: 'components/ui/Button.js', dest: 'components/ui/Button.js' },
+    { src: 'components/ui/LoadingDots.js', dest: 'components/ui/LoadingDots.js' },
+    { src: 'styles/style.js', dest: 'styles/style.js' }
+  ],
+  buttonicon: [
+    { src: 'components/ui/ButtonIcon.js', dest: 'components/ui/ButtonIcon.js' },
+    { src: 'styles/style.js', dest: 'styles/style.js' }
+  ],
+  buttondock: [
+    { src: 'components/ui/ButtonDock.js', dest: 'components/ui/ButtonDock.js' },
+    { src: 'styles/style.js', dest: 'styles/style.js' }
+  ],
   tag: [
     { src: 'components/ui/Tag.js', dest: 'components/ui/Tag.js' },
     { src: 'styles/style.js', dest: 'styles/style.js' }
@@ -192,4 +205,3 @@ if (args[0] === 'add' && args[1]) {
   console.log('Optional: dynamiclayer.config.json in the project root, e.g.:');
   console.log('{ "componentsDir": "src/components", "stylesDir": "src/styles", "assetsDir": "src/assets" }');
 }
-
